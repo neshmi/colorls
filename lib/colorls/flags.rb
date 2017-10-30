@@ -50,7 +50,8 @@ module ColorLS
       options.separator 'sorting options:'
       options.separator ''
       options.on('--sd', '--sort-dirs', '--group-directories-first', 'sort directories first') { @opts[:sort] = :dirs }
-      options.on('--sf', '--sort-files', 'sort files first')                                   { @opts[:sort] = :files }
+      options.on('--sz', '--sort-files', 'sort files first')                                   { @opts[:sort] = :files }
+      options.on('--ss', '--sort-size', 'sort size ascending')                                 { @opts[:sort] = :size }
     end
 
     def add_common_options(options)

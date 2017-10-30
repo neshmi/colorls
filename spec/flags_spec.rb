@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 RSpec.describe ColorLS::Flags do
-  FIXTURES = 'spec/fixtures'.freeze
+  FIXTURES = File.join('spec','fixtures').freeze
 
   subject { capture_stdout { ColorLS::Flags.new(*args).process } }
 
@@ -57,6 +57,12 @@ RSpec.describe ColorLS::Flags do
     let(:args) { ['--sort-files', FIXTURES] }
 
     it { is_expected.to match(/a-file.+z-file.+symlinks/) } # sorts results alphabetically, files first
+  end
+
+  context 'with --sort-size flag' do
+    let(:args) { ['--sort-size', FIXTURES] }
+
+    it { is_expected.to match(/symlinks.+z-file.+a-file/) } # sorts results size, smallest first
   end
 
   context 'with --dirs flag' do

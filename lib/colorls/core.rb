@@ -108,12 +108,17 @@ module ColorLS
     end
 
     def sort_contents(path)
-      @contents.sort! { |a, b| cmp_by_dirs(path, a, b) }
+      case @sort
+      when :size
+        @contents.sort_by! { |a| File.size(File.join(path,a)) }
+      else
+        @contents.sort! { |a, b| cmp_by_dirs(path, a, b) }
+      end
     end
 
     def cmp_by_dirs(path, a, b)
-      is_a_dir = Dir.exist?("#{path}/#{a}")
-      is_b_dir = Dir.exist?("#{path}/#{b}")
+      is_a_dir = Dir.exist?(File.join(path,a))
+      is_b_dir = Dir.exist?(File.join(path,b))
 
       return cmp_by_alpha(a, b) unless is_a_dir ^ is_b_dir
 
